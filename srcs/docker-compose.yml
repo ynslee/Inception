@@ -1,0 +1,62 @@
+#check docker-compose version command to see which version of docker-compose is installed
+version: '3'
+
+#presists the ata or share data between the containers
+# volumes:
+  # wordpress:
+  #   name: wordpress
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/yoonslee/data/wordpress
+  #     o: bind
+  # mariadb:
+  #   name: mariadb
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/toonslee/data/mariadb
+  #     o: bind
+
+#custom networks to facilitate communication between the containers
+networks:
+  inception_network:
+    name: inception_network
+
+#represents a containerized application or microservice. Dfines the image to use, env, ports to expose,
+#volumes to mount, and other related configuration to the service.
+services:
+  # mariadb:
+  #   image: mysql
+  #   container_name: mariadb
+  #   networks:
+  #       - inception_network
+  #   env_file: .env
+  #   volumes:
+  #    - mariadb:/var/lib/mysql
+  #   restart: always
+
+  # wordpress:
+  #   image: wordpress
+  #   container_name: wordpress
+  #   networks:
+  #       - inception_network
+  #   depends_on:
+  #     - mariadb
+  #   env_file: .env
+  #   volumes:
+  #    - wordpress:/var/www/html
+  #   restart: always
+
+  nginx::
+    build: /requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks:
+        - inception_network
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html
+    restart: always
