@@ -1,3 +1,7 @@
-FROM	alpine:3.18
+FROM alpine:3.18
 
-RUN apk addd --no-cache mysql-client
+WORKDIR /
+
+RUN apk update && apk add --no-cache mariadb mariadb-client \
+	# vim && \
+	# rm -rf /var/cache/apk/* 

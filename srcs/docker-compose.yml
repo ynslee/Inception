@@ -2,21 +2,21 @@
 version: '3'
 
 #presists the ata or share data between the containers
-# volumes:
-  # wordpress:
-  #   name: wordpress
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/yoonslee/data/wordpress
-  #     o: bind
-  # mariadb:
-  #   name: mariadb
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/toonslee/data/mariadb
-  #     o: bind
+volumes:
+#   wordpress:
+#     name: wordpress
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/yoonslee/data/wordpress
+#       o: bind
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/yoonseonlee/Inception/volumes/mariadb
+      o: bind
 
 #custom networks to facilitate communication between the containers
 networks:
@@ -26,14 +26,17 @@ networks:
 #represents a containerized application or microservice. Dfines the image to use, env, ports to expose,
 #volumes to mount, and other related configuration to the service.
 services:
-  # mariadb:
-  #   image: mysql
-  #   container_name: mariadb
-  #   networks:
-  #       - inception_network
+  mariadb:
+    image: mysql
+    container_name: mariadb
+    build: ./requirements/mariadb
+    networks:
+        - inception_network
   #   env_file: .env
-  #   volumes:
-  #    - mariadb:/var/lib/mysql
+    volumes:
+       - mariadb:/var/lib/mysql
+    stdin_open: true
+    tty: true
   #   restart: always
 
   # wordpress:
@@ -48,15 +51,15 @@ services:
   #    - wordpress:/var/www/html
   #   restart: always
 
-  nginx::
-    build: /requirements/nginx
+  nginx:
+    build: ./requirements/nginx
     container_name: nginx
     ports:
       - "443:443"
     networks:
         - inception_network
-    depends_on:
-      - wordpress
-    volumes:
-      - wordpress:/var/www/html
-    restart: always
+    # depends_on:
+    #   # - wordpress
+    # volumes:
+    #   - wordpress:/var/www/html
+    #restart: always
