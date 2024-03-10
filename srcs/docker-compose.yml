@@ -29,7 +29,7 @@ networks:
 services:
   mariadb:
     build:
-      conetxt: ./requirements/mariadb:yoonslee
+      context: ./requirements/mariadb/
       dockerfile : Dockerfile
     #use the image from our local repository, not from the Docker Hub
     # image: mariadb:yoonslee

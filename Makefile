@@ -10,19 +10,19 @@ all:
 	# @if [ ! -d "$(FILES_PATH)/wordlpress" ]; then \
 	#	mkdir -p $(FILES_PATH)/worldpressl; \
 	# fi
-	docker compose -f $(YML_PATH) up -d
+	docker-compose -f $(YML_PATH) up -d
 
 up:
-	docker compose -f $(YML_PATH) up -d
+	docker-compose -f $(YML_PATH) up -d
 
 down:
-	docker compose -f $(YML_PATH) down
+	docker-compose -f $(YML_PATH) down
 
 ps:
-	docker compose -f $(YML_PATH) ps
+	docker-compose -f $(YML_PATH) ps
 
 clean:
-	docker compose -f srcs/docker-compose.yml down --rmi all -v
+	docker-compose -f srcs/docker-compose.yml down --rmi all -v
 
 fclean: clean
 	@if [ -d $(FILES_PATH) ]; then \
