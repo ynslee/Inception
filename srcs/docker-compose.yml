@@ -29,7 +29,8 @@ networks:
 services:
   mariadb:
     build: ./requirements/mariadb/
-    image: mariadb/yoonslee
+    #use the image from our local repository, not from the Docker Hub
+    # image: mariadb:yoonslee
     container_name: mariadb_c
     networks:
       - inception_network
@@ -41,19 +42,19 @@ services:
 
   # wordpress:
   #   image: wordpress
-  #   container_name: wordpress
-  #   networks:
-  #       - inception_network
+  #   container_name: wordpress_c
+  # #   networks:
+  # #       - inception_network
   #   depends_on:
   #     - mariadb
   #   env_file: .env
-  #   volumes:
-  #    - wordpress:/var/www/html
+  # #   volumes:
+  # #    - wordpress:/var/www/html
   #   restart: always
 
   nginx:
     build: ./requirements/nginx/
-    image: nginx:yoonslee
+    # image: nginx:yoonslee
     container_name: nginx_c
     ports:
       - "443:443"
