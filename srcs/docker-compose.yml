@@ -35,8 +35,8 @@ services:
     env_file: .env
     volumes:
        - mariadb:/var/lib/mysql
-    tty: true
-  #   restart: always
+    # tty: true
+    restart: always
 
   # wordpress:
   #   image: wordpress
@@ -62,4 +62,4 @@ services:
     #   # - wordpress
     # volumes:
     #   - wordpress:/var/www/html
-    #restart: always
+    restart: always
