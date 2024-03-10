@@ -24,11 +24,11 @@ FLUSH PRIVILEGES ;
 
 DROP DATABASE IF EXISTS test ;
 
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'password' ;
-CREATE DATABASE IF NOT EXISTS inception_db CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER 'yoonslee'@'localhost' IDENTIFIED by 'password' ;
-GRANT ALL PRIVILEGES ON inception_db.* TO 'yoonslee'@'localhost';
-GRANT ALL PRIVILEGES ON *.* TO 'yoonslee'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+CREATE DATABASE IF NOT EXISTS ${MY_DB_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER '${MY_DB_USER}'@'localhost' IDENTIFIED by '${MY_DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${MY_DB_NAME}.* TO '${MY_DB_USER}'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO '${MY_DB_USER}'@'localhost' IDENTIFIED BY '${MY_DB_PASSWORD}' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES ;
 
@@ -38,4 +38,3 @@ EOF
 # GRANT SELECT ON inception_db.* TO 'yoonslee'@'%';
 # exec mysql_secure_installation
 exec mysqld_safe "--defaults-file=/etc/my.cnf.d/my.cnf"
-# mysqld_safe
