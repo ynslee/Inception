@@ -3,7 +3,7 @@
 FROM alpine:latest
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/index.html /var/www/inex.html
+COPY conf/index.html /var/www/html/index.html
 
 
 #Update and upgrade apk packages
