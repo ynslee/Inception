@@ -28,9 +28,11 @@ networks:
 #volumes to mount, and other related configuration to the service.
 services:
   mariadb:
-    build: ./requirements/mariadb/
+    build:
+      conetxt: ./requirements/mariadb:yoonslee
+      dockerfile : Dockerfile
     #use the image from our local repository, not from the Docker Hub
-    image: mariadb:yoonslee
+    # image: mariadb:yoonslee
     container_name: mariadb_c
     networks:
       - inception_network
@@ -53,8 +55,10 @@ services:
   #   restart: always
 
   nginx:
-    build: ./requirements/nginx/
-    image: nginx:yoonslee
+    build:
+      context: ./requirements/nginx/
+      dockerfile : Dockerfile
+    # image: nginx:yoonslee
     container_name: nginx_c
     ports:
       - "443:443"
