@@ -27,11 +27,13 @@ networks:
 #volumes to mount, and other related configuration to the service.
 services:
   mariadb:
-    build: ./requirements/mariadb
-    image: mariadb
+    build: ./requirements/mariadb/
+    image: mariadb/yoonslee
     container_name: mariadb_c
     networks:
-        - inception_network
+      - inception_network
+    ports:
+      - "3306:3306"
     env_file: .env
     volumes:
        - mariadb:/var/lib/mysql
@@ -51,13 +53,13 @@ services:
   #   restart: always
 
   nginx:
-    build: ./requirements/nginx
-    image: nginx
+    build: ./requirements/nginx/
+    image: nginx:yoonslee
     container_name: nginx_c
     ports:
       - "443:443"
     networks:
-        - inception_network
+      - inception_network
     # depends_on:
     #   # - wordpress
     # volumes:
