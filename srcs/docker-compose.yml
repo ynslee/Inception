@@ -30,7 +30,7 @@ services:
   mariadb:
     build: ./requirements/mariadb/
     #use the image from our local repository, not from the Docker Hub
-    # image: mariadb:yoonslee
+    image: mariadb:yoonslee
     container_name: mariadb_c
     networks:
       - inception_network
@@ -54,7 +54,7 @@ services:
 
   nginx:
     build: ./requirements/nginx/
-    # image: nginx:yoonslee
+    image: nginx:yoonslee
     container_name: nginx_c
     ports:
       - "443:443"
