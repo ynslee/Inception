@@ -1,32 +1,32 @@
 YML_PATH = srcs/docker-compose.yml
-FILES_PATH = /home/yoonslee/data
+FILES_PATH = /home/yoonseonlee/data
 
 .PHONY: up down ps clean fclean prune re all reset info
 
 all:
-	@if [ ! -d "/home/meskelin/data/mysql" ]; then \
-		mkdir -p /home/meskelin/data/mysql; \
+	@if [ ! -d "$(FILES_PATH)/mariadb" ]; then \
+		mkdir -p $(FILES_PATH)/mariadb; \
 	fi
-	@if [ ! -d "/home/meskelin/data/html" ]; then \
-		mkdir -p /home/meskelin/data/html; \
-	fi
-	docker-compose -f $(YML_PATH) up -d
+	# @if [ ! -d "$(FILES_PATH)/wordlpress" ]; then \
+	#	mkdir -p $(FILES_PATH)/worldpressl; \
+	# fi
+	docker compose -f $(YML_PATH) up -d
 
 up:
-	docker-compose -f $(YML_PATH) up -d
+	docker compose -f $(YML_PATH) up -d
 
 down:
-	docker-compose -f $(YML_PATH) down
+	docker compose -f $(YML_PATH) down
 
 ps:
-	docker-compose -f $(YML_PATH) ps
+	docker compose -f $(YML_PATH) ps
 
 clean:
-	docker-compose -f srcs/docker-compose.yml down --rmi all -v
+	docker compose -f srcs/docker-compose.yml down --rmi all -v
 
 fclean: clean
-	@if [-d $(FILES_PATH)]; then \
-		rm -rf $(FILES_PATH); \
+	@if [ -d $(FILES_PATH) ]; then \
+			rm -rf $(FILES_PATH); \
 	fi;
 
 prune:

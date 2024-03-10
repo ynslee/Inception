@@ -1,5 +1,5 @@
 #check docker-compose version command to see which version of docker-compose is installed
-version: '3'
+# version: '3'
 
 #presists the ata or share data between the containers
 volumes:
@@ -15,7 +15,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/yoonseonlee/Inception/volumes/mariadb
+      device: /Users/yoonseonlee/data/mariadb
       o: bind
 
 #custom networks to facilitate communication between the containers
@@ -34,8 +34,7 @@ services:
         - inception_network
     env_file: .env
     volumes:
-       - mariadb:/var/lib/mariadb
-    stdin_open: true
+       - mariadb:/var/lib/mysql
     tty: true
   #   restart: always
 
