@@ -28,7 +28,7 @@ networks:
 services:
   mariadb:
     build: ./requirements/mariadb
-    image: mariadb:10.8.2
+    image: mariadb:latest
     container_name: mariadb_c
     networks:
         - inception_network
