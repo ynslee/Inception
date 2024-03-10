@@ -1,7 +1,8 @@
 #check docker-compose version command to see which version of docker-compose is installed
 # version: '3'
 
-#presists the ata or share data between the containers
+#creates data on the host machine, making it easily
+#accessible for backup, inspection or use by other containers or applications
 volumes:
 #   wordpress:
 #     name: wordpress
@@ -32,8 +33,6 @@ services:
     container_name: mariadb_c
     networks:
       - inception_network
-    ports:
-      - "3306:3306"
     env_file: .env
     volumes:
        - mariadb:/var/lib/mysql
