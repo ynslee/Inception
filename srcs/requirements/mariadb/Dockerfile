@@ -1,10 +1,10 @@
 FROM alpine:3.18
 
-COPY /conf/maridb.cnf /etc/my.cnf.d/mariadb.cnf
-COPY /tools/setup.sh /tmp/setup.sh
+COPY ./conf/maridb.cnf /etc/my.cnf.d/
+COPY ./tools/setup.sh /tmp/
 
 RUN apk update && apk add --no-cache mariadb mariadb-client && \
-	# chmod 644 /etc/my.cnf.d/mariadb.cnf && \
+	chmod 644 /etc/my.cnf.d/mariadb.cnf && \
 	chmod +x /tmp/setup.sh
 	# mkdir -p /run/mysqld && \
 	# chown -R mysql:mysql /run/mysqld && \
