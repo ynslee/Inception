@@ -2,8 +2,8 @@
 #widely used in production environments to serve websites and web applications, handle high volumes of traffic, and improve performance and reliability.
 FROM alpine:latest
 
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/index.html /var/www/html/index.html
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
+COPY /conf/index.html /var/www/html/index.html
 
 
 #Update and upgrade apk packages
