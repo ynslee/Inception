@@ -13,4 +13,4 @@ RUN apk update && apk add --no-cache mariadb-server mariadb-client && \
 
 EXPOSE 3306
 
-CMD ["setup.sh"]
+CMD ["bash" "setup.sh"]
