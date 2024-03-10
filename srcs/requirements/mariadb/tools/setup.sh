@@ -9,16 +9,15 @@ if [ -z "$MARIADB_USER" ] || [ -z "$MARIADB_ROOT_PASSWORD" ]; then
   exit 1
 fi
 
-mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql /error/log/mysql
+mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql
 chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/log/mysql
-chown -R mysql:mysql /error/log/mysql
 touch /var/log/mysql/error.log
 
 mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql --rpm >> /dev/null
 
-mysqld --user=mysql --bootstrap  << _EOF_
+mysqld --user=mysql --bootstrap  << EOF
 USE mysql ;
 FLUSH PRIVILEGES ;
 
@@ -28,6 +27,6 @@ CREATE USER '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD' ;
 GRANT ALL PRIVILEGES ON $MARIADB_HOST.* TO '$MARIADB_USER'@'%' ;
 GRANT ALL PRIVILEGES ON *.* TO '$MARIADB_USER'@'%' ;
 FLUSH PRIVILEGES ;
-_EOF_
+EOF
 
 exec mysqld_safe "--defaults-file=/etc/my.cnf.d/mariadb.cnf"
