@@ -28,7 +28,7 @@ networks:
 services:
   mariadb:
     build: ./requirements/mariadb
-    image: mariadb:latest
+    image: mariadb
     container_name: mariadb_c
     networks:
         - inception_network
@@ -52,7 +52,7 @@ services:
 
   nginx:
     build: ./requirements/nginx
-    image: nginx:latest
+    image: nginx
     container_name: nginx_c
     ports:
       - "443:443"
