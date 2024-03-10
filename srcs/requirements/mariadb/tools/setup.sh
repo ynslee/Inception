@@ -1,5 +1,14 @@
 #!/bin/sh
 
+if [ -z "$MYSQL_ROOT_PASSWORD" ]; then
+  echo "Error: MARIADB_ROOT_PASSWORD environment variable is not set."
+  exit 1
+fi
+if [ -z "$MYSQL_USER" ] || [ -z "$MYSQLROOT_PASSWORD" ]; then
+  echo "Error: DB_USER and/ or DB_USER_PASSWORD environment variable is not set."
+  exit 1
+fi
+
 mkdir -p /var/lib/mysql /run/mysqld /var/log/mysql /error/log/mysql
 chown -R mysql:mysql /var/lib/mysql
 chown -R mysql:mysql /run/mysqld
