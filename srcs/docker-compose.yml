@@ -27,14 +27,14 @@ networks:
 #volumes to mount, and other related configuration to the service.
 services:
   mariadb:
-    image: mysql
-    container_name: mariadb
     build: ./requirements/mariadb
+    image: mariadb:latest
+    container_name: mariadb_c
     networks:
         - inception_network
-  #   env_file: .env
+    env_file: .env
     volumes:
-       - mariadb:/var/lib/mysql
+       - mariadb:/var/lib/mariadb
     stdin_open: true
     tty: true
   #   restart: always
@@ -53,7 +53,8 @@ services:
 
   nginx:
     build: ./requirements/nginx
-    container_name: nginx
+    image: nginx:latest
+    container_name: nginx_c
     ports:
       - "443:443"
     networks:
