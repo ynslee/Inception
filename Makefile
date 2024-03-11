@@ -6,10 +6,20 @@ FILES_PATH = /Users/yoonseonlee/data
 all:
 	@if [ ! -d "$(FILES_PATH)/mariadb" ]; then \
 		mkdir -p $(FILES_PATH)/mariadb; \
+		chmod -R 777 $(FILES_PATH)/mariadb; \
 	fi
-	# @if [ ! -d "$(FILES_PATH)/wordlpress" ]; then \
-	#	mkdir -p $(FILES_PATH)/worldpressl; \
-	# fi
+	@if [ ! -d "$(FILES_PATH)/wordpress" ]; then \
+		mkdir -p $(FILES_PATH)/wordpress; \
+		chmod -R 777 $(FILES_PATH)/wordpress; \
+	fi
+	@if ! grep -q "yoonslee.42.fr" /etc/hosts; then \
+		chmod 777 /etc/hosts; \
+		echo "127.0.0.1 yoonslee.42.fr" >> /etc/hosts; \
+	fi
+	@if ! grep -q "yoonslee.42.fr" /etc/hosts; then \
+		chmod 777 /etc/hosts; \
+		echo "127.0.0.1 yoonslee.42.fr" >> /etc/hosts; \
+	fi
 	docker-compose -f $(YML_PATH) up -d
 
 up:

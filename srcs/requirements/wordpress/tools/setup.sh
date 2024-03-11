@@ -31,7 +31,7 @@ wp config create \
 	--dbpass=$WORDPRESS_DB_PASSWORD \
 	--dbhost=$MYSQL_HOST \
 	--dbcharset="utf8" --dbcollate="utf8_general_ci" \
-	# --path=/var/www/html/wordpress/ \
+	--path=/var/www/html/wordpress/ \
 	# --force
 
 # Install WordPress and feed db config
@@ -43,7 +43,7 @@ wp core install \
 	--admin_email=$WORDPRESS_ADMIN_EMAIL \
 	--allow-root \
 	--skip-email \
-	# --path=/var/www/html/wordpress/
+	--path=/var/www/html/wordpress/
 
 # Create WordPress user
 wp user create \
@@ -66,9 +66,10 @@ wp option update siteurl "https://$DOMAIN_NAME" --allow-root
 wp option update home "https://$DOMAIN_NAME" --allow-root
 
 # Transfer ownership to the user
-chown -R nginx:nginx /run/php/
+chown -R nginx:nginx /var/www/html/wordpress/
+
 # Full permissions for owner, read/exec to others
-chmod -R 755 /run/php/
+chmod -R 755 /var/www/html/wordpress/
 
 # Fire up PHP-FPM (-F to keep in foreground and avoid recalling script)
 php-fpm81 -F
