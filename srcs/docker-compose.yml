@@ -9,7 +9,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/yoonseonlee/data/wordpress
+      device: /home/yoonslee/data/wordpress
       o: bind
   
   mariadb:
@@ -17,7 +17,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/yoonseonlee/data/mariadb
+      device: /home/yoonslee/data/mariadb
       o: bind
 
 #custom networks to facilitate communication between the containers
@@ -33,8 +33,8 @@ services:
       context: ./requirements/mariadb/
       dockerfile : Dockerfile
     #use the image from our local repository, not from the Docker Hub
-    # image: mariadb:yoonslee
-    container_name: mariadb_c
+    image: mariadb:yoonslee
+    container_name: mariadb
     networks:
       - inception_network
     env_file: .env
@@ -46,10 +46,10 @@ services:
     build:
       context: ./requirements/wordpress/
       dockerfile : Dockerfile
-    # image: wordpress
-    container_name: wordpress_c
+    image: wordpress:yoonslee
+    container_name: wordpress
     networks:
-        - inception_network
+      - inception_network
     depends_on:
       - mariadb
     env_file: .env
@@ -61,8 +61,8 @@ services:
     build:
       context: ./requirements/nginx/
       dockerfile : Dockerfile
-    # image: nginx:yoonslee
-    container_name: nginx_c
+    image: nginx:yoonslee
+    container_name: nginx
     ports:
       - "443:443"
     networks:

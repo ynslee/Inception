@@ -1,38 +1,29 @@
 #!/bin/sh
 
-# Wait for MariaDB to be ready
-attempts=0
-while ! mariadb -h$MY_DB_NAME -u$WORDPRESS_DB_USER -p$WORDPRESS_DB_PASSWORD $WORDPRESS_DB_NAME &>/dev/null; do
-	# attempts=$((attempts + 1))
-    # echo "MariaDB unavailable. Attempt $attempts: Trying again in 5 sec."
-	# if [ $attempts -ge 12 ]; then
-	# 	echo "Max attempts reached. MariaDB connection could not be established."
-    #     exit 1
-	# fi
+#Wait for MariaDB to be ready
+while ! wget --spider -q mariadb:3306; do
     sleep 5
 done
 echo "MariaDB connection established!"
 
 echo "Listing databases:"
-mariadb -h$MYSQL_HOST -u$WORDPRESS_DB_USER -p$WORDPRESS_DB_PASSWORD $WORDPRESS_DB_NAME <<EOF
-SHOW DATABASES;
-EOF
 
 # Set working dir
-cd /var/www/html/wordpress/
+cd /var/www/html
 
 # DL WP using the CLI
 wp core download --allow-root
 
 # Create WordPress database config
 wp config create \
-	--dbname=$WORDPRESS_DB_NAME \
-	--dbuser=$WORDPRESS_DB_USER \
-	--dbpass=$WORDPRESS_DB_PASSWORD \
-	--dbhost=$MYSQL_HOST \
-	--dbcharset="utf8" --dbcollate="utf8_general_ci" \
-	--path=/var/www/html/wordpress/ \
-	# --force
+	--dbname=$MY_DB_NAME \
+	--dbuser=$MY_DB_USER \
+	--dbpass=$MY_DB_PASSWORD \
+	--dbhost=mariadb \
+	--path=/var/www/html \
+	--force
+
+# --dbcharset="utf8" --dbcollate="utf8_general_ci" \
 
 # Install WordPress and feed db config
 wp core install \
@@ -43,7 +34,7 @@ wp core install \
 	--admin_email=$WORDPRESS_ADMIN_EMAIL \
 	--allow-root \
 	--skip-email \
-	--path=/var/www/html/wordpress/
+	--path=/var/www/html
 
 # Create WordPress user
 wp user create \
@@ -61,15 +52,13 @@ wp theme install inspiro \
 # Update plugins
 wp plugin update --all
 
-# Update WP address and site address to match our domain
+# Update to match our domain
 wp option update siteurl "https://$DOMAIN_NAME" --allow-root
 wp option update home "https://$DOMAIN_NAME" --allow-root
 
-# Transfer ownership to the user
-chown -R nginx:nginx /var/www/html/wordpress/
-
-# Full permissions for owner, read/exec to others
-chmod -R 755 /var/www/html/wordpress/
+# Set permissions
+chown -R www:www /var/www/html
+chmod -R 755 /var/www/html
 
 # Fire up PHP-FPM (-F to keep in foreground and avoid recalling script)
 php-fpm81 -F
