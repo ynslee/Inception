@@ -14,6 +14,7 @@ This project implements a System Administration exercise using Docker. It virtua
   - NGINX container with TLSv1.2 or TLSv1.3.
   - WordPress + php-fpm container without nginx.
   - MariaDB container without nginx.
+  - Understanding of SQL and usages of database
   - Volumes for WordPress database and website files.
   - Docker network to connect containers.
 - Containers are configured to restart on crash.
